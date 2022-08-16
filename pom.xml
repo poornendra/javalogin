@@ -67,13 +67,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	<distributionManagement>
-    <repository>
-        <id>central</id>
-        <name>a0zogzhj8pfv0-artifactory-primary-0-releases</name>
-        <url>https://dtp5.jfrog.io/artifactory/dpt5-libs-release-local</url>
-    </repository>
-</distributionManagement>
+	
  
 
 </project>
