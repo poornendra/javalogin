@@ -19,7 +19,7 @@ pipeline {
 		stage('Deploy to Dev'){
 		steps {
 		sh 'mv target/*.jar target/java.jar'
-		sshagent(['tomcat2']) {
+		sshagent(['tomcat3']) {
 			sh 'ssh ubuntu@172.31.40.143 rm -rf /opt/tomcat9/webapps/*.jar'
 		    sh 'scp $${WORKSPACE}/target/java.jar ubuntu@172.31.40.143:/opt/tomcat9/webapps/'
 		    sh 'ssh ubuntu@172.31.40.143 sudo service tomcat restart'
