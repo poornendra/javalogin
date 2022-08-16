@@ -2,27 +2,22 @@ pipeline {
     agent any
 
     stages {
-		stage('checkout'){
-		steps{
-		git 'https://github.com/jglick/simple-maven-project-with-tests.git'
-
-		}    
-	 }
         stage('Build') {
             steps {
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.skip=true clean install"
+                sh "mvn  clean install"
   
             }
         }
 		stage('Deploy to Dev'){
 		steps {
-		sh 'mv target/*.jar target/java.jar'
-		sshagent(['tomcat3']) {
-			sh 'ssh ubuntu@172.31.40.143 rm -rf /opt/tomcat9/webapps/*.jar'
-		    sh 'scp $${WORKSPACE}/target/java.jar ubuntu@172.31.40.143:/opt/tomcat9/webapps/'
-		    sh 'ssh ubuntu@172.31.40.143 sudo service tomcat restart'
+		sh 'mv target/*.war target/java.war'
+		sshagent(['tomcatec2']) {
+			//sh 'ssh ubuntu@172.31.40.143 rm -rf /opt/tomcat9/webapps/*.jar'
+			//sh 'ssh ubuntu@18.143.91.234 sudo service tomcat restart'
+		    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Java/target/java.war ec2-user@13.212.21.88:/usr/share/tomcat/webapps'
+		    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.212.21.88 sudo service tomcat restart'
 		}
 	}
 	}
