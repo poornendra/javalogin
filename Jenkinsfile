@@ -12,12 +12,7 @@ pipeline {
         }
 		stage('Deploy to Dev'){
 		steps {
-		sh 'mv target/*.war target/java.war'
-		sshagent(['tomcatec2']) {
-			//sh 'ssh ubuntu@172.31.40.143 rm -rf /opt/tomcat9/webapps/*.jar'
-			//sh 'ssh ubuntu@18.143.91.234 sudo service tomcat restart'
-		    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Java/target/java.war ec2-user@13.212.21.88:/usr/share/tomcat/webapps'
-		    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.212.21.88 sudo service tomcat restart'
+		deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.214.155.191:8080/')], contextPath: 'Java app', war: '**/*.war'
 		}
 	}
 	}
