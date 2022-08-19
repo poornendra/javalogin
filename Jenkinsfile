@@ -1,20 +1,31 @@
-pipeline {
-    agent any
+pipeline{
 
-    stages {
-        stage('Build') {
-            steps {
+  agent any
 
-                // Run Maven on a Unix agent.
-                sh "mvn  clean install"
-  
+  stages{
+
+      stage("Maven Build"){
+
+        steps{
+
+            sh "mvn -B -DskipTests clean package"
+
+            sh "mv target/*.war target/myweb.war"
+
+             }
+
             }
+
+      stage("deploy"){
+
+       steps{
+
+         deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.214.155.191:8080/')], contextPath: 'Java app', war: '**/*.war'          
+
+          }
+
         }
-		stage('Deploy to Dev'){
-		steps {
-		deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.214.155.191:8080/')], contextPath: 'Java app', war: '**/*.war'
-		}
-	}
-	}
-}
-}
+
+      }
+
+    }
