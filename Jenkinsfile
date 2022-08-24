@@ -20,7 +20,7 @@ pipeline{
 
        steps{
 
-         deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.214.155.191:8080')], contextPath: '**/*.war', war: 'javaapp'          
+         deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.212.169.36:8080')], contextPath: '**/*.war', war: 'java'          
 
           }
 
