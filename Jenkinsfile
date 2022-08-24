@@ -1,10 +1,14 @@
-pipeline{
+pipeline {
+    agent any
 
-  agent any
+    stages {
+		stage('checkout'){
+		steps{
+		git 'https://github.com/Cyrilflair/javalogin.git'
 
-  stages{
-
-      stage("Maven Build"){
+		}    
+	 }
+        stage("Maven Build"){
 
         steps{
 
